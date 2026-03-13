@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Extension Diagnostic</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      background: #1e1e1e;
+      color: #00ff00;
+    }
+    .test { margin: 20px 0; padding: 15px; background: #2a2a2a; border-left: 3px solid #00ff00; }
+    .pass { border-color: #00ff00; }
+    .fail { border-color: #ff0000; color: #ff0000; }
+    input { padding: 10px; font-size: 16px; width: 100%; margin: 10px 0; }
+    button { padding: 10px 20px; background: #00ff00; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Keystroke Display Diagnostic</h1>
+  
+  <div class="test" id="test1">
+    <strong>Test 1:</strong> Checking if extension container exists...
+    <div id="result1"></div>
+  </div>
+  
+  <div class="test" id="test2">
+    <strong>Test 2:</strong> Type in this input field:
+    <input type="text" id="testInput" placeholder="Type here...">
+    <div id="result2"></div>
+  </div>
+  
+  <div class="test" id="test3">
+    <strong>Test 3:</strong> Manual check
+    <button onclick="checkExtension()">Check Extension Status</button>
+    <div id="result3"></div>
+  </div>
+  
+  <div class="test">
+    <strong>Instructions:</strong>
+    <ol>
+      <li>Make sure extension is installed</li>
+      <li>Click the extension icon</li>
+      <li>Toggle it to "Enabled"</li>
+      <li>Refresh this page (F5)</li>
+      <li>Type in the input field above</li>
+      <li>Look for keystrokes in bottom-right corner</li>
+    </ol>
+  </div>
+
+  <script>
+    function checkExtension() {
+      const container = document.getElementById('keystroke-display-container');
+      const result3 = document.getElementById('result3');
+      
+      if (container) {
+        result3.innerHTML = '✅ Container found! Extension is active.';
+        result3.style.color = '#00ff00';
+      } else {
+        result3.innerHTML = '❌ Container NOT found. Extension not active.<br>Did you enable it and refresh the page?';
+        result3.style.color = '#ff0000';
+      }
+    }
+    
+    // Auto-check on load
+    setTimeout(() => {
+      const container = document.getElementById('keystroke-display-container');
+      const result1 = document.getElementById('result1');
+      const test1 = document.getElementById('test1');
+      
+      if (container) {
+        result1.innerHTML = '✅ PASS - Container exists!';
+        test1.className = 'test pass';
+      } else {
+        result1.innerHTML = '❌ FAIL - Container not found. Enable extension and refresh page.';
+        test1.className = 'test fail';
+      }
+    }, 1000);
+    
+    // Monitor typing
+    document.getElementById('testInput').addEventListener('keydown', (e) => {
+      const result2 = document.getElementById('result2');
+      result2.innerHTML = `Key pressed: ${e.key} (code: ${e.code})`;
+    });
+    
+    // Check every 2 seconds
+    setInterval(checkExtension, 2000);
+  </script>
+</body>
+</html>
+

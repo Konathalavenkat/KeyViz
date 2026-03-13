@@ -1,0 +1,48 @@
+/* KeyViz Display Styles */
+#keystroke-display-container {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 2147483647; /* Extreme z-index to stay on top */
+  pointer-events: none;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.keystroke-display-item {
+  background: rgba(15, 23, 42, 0.9); /* Slate 900 */
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 10px 15px -3px rgb(0 0 0 / 0.3),
+    0 4px 6px -4px rgb(0 0 0 / 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 0 15px rgba(255, 255, 255, 0.1);
+  animation: keyIn 0.25s cubic-bezier(0.2, 0, 0, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+@keyframes keyIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

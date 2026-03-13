@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keystroke Display - Test Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 60px;
+      max-width: 800px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #667eea;
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    .instructions {
+      background: #f3f4f6;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    .instructions h2 {
+      color: #1f2937;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .instructions ol {
+      color: #4b5563;
+      font-size: 16px;
+      line-height: 1.8;
+      padding-left: 20px;
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+    }
+
+    .test-area {
+      background: #f9fafb;
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .test-area h3 {
+      color: #374151;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .shortcuts {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .shortcuts h3 {
+      color: #92400e;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .shortcuts ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .shortcuts li {
+      color: #78350f;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .shortcuts code {
+      background: #fde68a;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⌨️ Keystroke Display</h1>
+    <p class="subtitle">Test your keystroke display extension</p>
+
+    <div class="instructions">
+      <h2>📋 How to Test</h2>
+      <ol>
+        <li>Make sure the Keystroke Display extension is installed and enabled</li>
+        <li>Click the extension icon and toggle "Enable Display" to ON</li>
+        <li>Start typing in the fields below or anywhere on this page</li>
+        <li>Watch your keystrokes appear in the bottom-right corner!</li>
+      </ol>
+    </div>
+
+    <div class="test-area">
+      <h3>Type Here to Test</h3>
+      <input type="text" placeholder="Type something here...">
+      <textarea placeholder="Or type in this text area..."></textarea>
+    </div>
+
+    <div class="shortcuts">
+      <h3>🎯 Try These Shortcuts</h3>
+      <ul>
+        <li><code>Ctrl + C</code> - Copy</li>
+        <li><code>Ctrl + V</code> - Paste</li>
+        <li><code>Ctrl + Z</code> - Undo</li>
+        <li><code>Alt + Tab</code> - Switch windows</li>
+        <li><code>Arrow Keys</code> - Navigate</li>
+        <li><code>Enter</code> - New line</li>
+        <li><code>Backspace</code> - Delete</li>
+        <li><code>Shift + Any Key</code> - Uppercase/Symbols</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
+

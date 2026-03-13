@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Keystroke Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f5f5f5;
+    }
+    .debug-panel {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .status.info {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #5568d3;
+    }
+    #log {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="debug-panel">
+    <h2>🔍 Keystroke Display Debug Panel</h2>
+    
+    <div id="extensionStatus" class="status info">
+      Checking extension status...
+    </div>
+
+    <div class="debug-panel">
+      <h3>Manual Test</h3>
+      <p>Type in this input field:</p>
+      <input type="text" id="testInput" placeholder="Type here to test...">
+      
+      <div style="margin-top: 20px;">
+        <button onclick="testExtension()">Test Extension</button>
+        <button onclick="clearLog()">Clear Log</button>
+        <button onclick="checkContainer()">Check Container</button>
+      </div>
+    </div>
+
+    <div class="debug-panel">
+      <h3>Debug Log</h3>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <script>
+    const log = document.getElementById('log');
+    const statusDiv = document.getElementById('extensionStatus');
+
+    function addLog(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = `[${timestamp}] ${message}\n`;
+      log.textContent += logEntry;
+      log.scrollTop = log.scrollHeight;
+      console.log(message);
+    }
+
+    function clearLog() {
+      log.textContent = '';
+      addLog('Log cleared');
+    }
+
+    function checkContainer() {
+      const container = document.getElementById('keystroke-display-container');
+      if (container) {
+        addLog('✓ Container found!', 'success');
+        addLog(`Container position: ${window.getComputedStyle(container).position}`);
+        addLog(`Container z-index: ${window.getComputedStyle(container).zIndex}`);
+        addLog(`Container display: ${window.getComputedStyle(container).display}`);
+      } else {
+        addLog('✗ Container NOT found - extension may not be enabled', 'error');
+      }
+    }
+
+    function testExtension() {
+      addLog('Testing extension...');
+      
+      // Check if content script is loaded
+      if (typeof chrome !== 'undefined' && chrome.runtime) {
+        addLog('✓ Chrome runtime available');
+        
+        // Try to send a message
+        chrome.runtime.sendMessage({ action: 'getStatus' }, (response) => {
+          if (chrome.runtime.lastError) {
+            addLog('✗ Error: ' + chrome.runtime.lastError.message, 'error');
+          } else {
+            addLog('✓ Extension responded: ' + JSON.stringify(response), 'success');
+          }
+        });
+      } else {
+        addLog('✗ Chrome runtime not available', 'error');
+      }
+      
+      checkContainer();
+    }
+
+    // Check on load
+    window.addEventListener('load', () => {
+      addLog('Page loaded');
+      setTimeout(() => {
+        checkContainer();
+        
+        // Check if extension is installed
+        const container = document.getElementById('keystroke-display-container');
+        if (container) {
+          statusDiv.textContent = '✓ Extension is active!';
+          statusDiv.className = 'status success';
+        } else {
+          statusDiv.textContent = '⚠ Extension not detected. Make sure it\'s enabled in the popup.';
+          statusDiv.className = 'status error';
+        }
+      }, 1000);
+    });
+
+    // Listen for keystrokes
+    document.addEventListener('keydown', (e) => {
+      addLog(`Key pressed: ${e.key} (code: ${e.code})`);
+    });
+
+    addLog('Debug panel initialized');
+  </script>
+</body>
+</html>
+
